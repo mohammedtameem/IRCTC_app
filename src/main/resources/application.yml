@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: IRCTC-backend
+
+  datasource:
+    url: jdbc:mysql://mysql-db:3306/backendx
+    username: root
+    password: login123$
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+    show-sql: true
+
+server:
+  port: 8085

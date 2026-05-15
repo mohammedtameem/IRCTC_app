@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+
+  mysql-db:
+    image: mysql:8
+    container_name: mysql-db
+
+    environment:
+      MYSQL_ROOT_PASSWORD: login123$
+      MYSQL_DATABASE: backendx
+
+    ports:
+      - "3307:3306"
+
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  irctc-app:
+    image: hello124/irctc-app:latest-0.0.2
+    container_name: irctc-app
+
+    ports:
+      - "8085:8085"
+
+    depends_on:
+      - mysql-db
+
+volumes:
+  mysql-data:
