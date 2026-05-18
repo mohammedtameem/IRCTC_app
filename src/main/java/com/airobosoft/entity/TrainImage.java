@@ -14,6 +14,7 @@ public class TrainImage {
     private String fileType;
     private long size;
     private LocalDateTime uploadTime = LocalDateTime.now();
+    private String objectName;
 
     @OneToOne(mappedBy = "trainImage")
     private Train train;

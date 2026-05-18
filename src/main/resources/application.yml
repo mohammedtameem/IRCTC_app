@@ -49,3 +49,10 @@ train:
   image:
     folder:
       path: uploads/
+
+
+minio:
+  url: http://localhost:9100
+  access-key: admin
+  secret-key: password123
+  bucket-name: train-images

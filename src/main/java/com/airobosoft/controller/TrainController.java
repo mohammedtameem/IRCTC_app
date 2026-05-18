@@ -128,13 +128,11 @@ public class TrainController {
             @RequestParam("image")
             MultipartFile image
 
-    ) throws IOException {
+    ) throws Exception {
 
         String contentType = image.getContentType();
-
         if (contentType != null &&
                 contentType.toLowerCase().startsWith("image")) {
-
             return new ResponseEntity<>(
                     imageService.upload(image, id),
                     HttpStatus.OK
