@@ -2,14 +2,15 @@ package com.airobosoft.controller;
 
 import com.airobosoft.dto.TrainDTO;
 import com.airobosoft.service.TrainService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/trains")
@@ -18,10 +19,31 @@ public class TrainController {
     @Autowired
     private TrainService service;
 
-    @GetMapping(path="/list",produces = MediaType.APPLICATION_XML_VALUE)
-    public ResponseEntity<List<TrainDTO>> listTrain() {
+    @Operation(
+            summary = "Get All Trains",
+            description = "Returns paginated train list"
+    )    @GetMapping(
+            path = "/list",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<Page<TrainDTO>> listTrain(
 
-        return ResponseEntity.ok(service.all());
+            @RequestParam(defaultValue = "0")
+            int page,
+
+            @RequestParam(defaultValue = "5")
+            int size,
+
+            @RequestParam(defaultValue = "id")
+            String sortBy,
+
+            @RequestParam(defaultValue = "asc")
+            String direction
+    ) {
+
+        return ResponseEntity.ok(
+                service.all(page, size, sortBy, direction)
+        );
     }
 
     @PostMapping
@@ -36,19 +58,19 @@ public class TrainController {
     }
 
     @GetMapping("/{trainNo}")
-    public ResponseEntity<TrainDTO> getTrainByNo(
-            @PathVariable String trainNo) {
+    public ResponseEntity<TrainDTO> getTrainById(
+            @PathVariable Long id) {
 
-        TrainDTO train = service.get(trainNo);
+        TrainDTO train = service.get(id);
 
         return ResponseEntity.ok(train);
     }
 
     @DeleteMapping("/{trainNo}")
-    public ResponseEntity<Void> deleteTrainNo(
-            @PathVariable String trainNo) {
+    public ResponseEntity<Void> deleteByTrainId(
+            @PathVariable Long id) {
 
-        service.delete(trainNo);
+        service.delete(id);
 
         return ResponseEntity.noContent().build();
     }

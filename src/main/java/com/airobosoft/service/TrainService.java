@@ -5,9 +5,12 @@ import com.airobosoft.entity.Train;
 import com.airobosoft.repo.TrainRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -23,16 +26,26 @@ public class TrainService {
     }
 
     // SELECT *
-    public List<TrainDTO> all() {
+    public Page<TrainDTO> all(int page,
+                              int size,
+                              String sortBy,
+                              String direction) {
 
-        return trainRepository.findAll()
-                .stream()
-                .map(train ->
-                        modelMapper.map(train, TrainDTO.class))
-                .toList();
+        Sort sort = direction.equalsIgnoreCase("asc")
+                ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+
+        Pageable pageable =
+                PageRequest.of(page, size, sort);
+
+        Page<Train> trainPage =
+                trainRepository.findAll(pageable);
+
+        return trainPage.map(train ->
+                modelMapper.map(train, TrainDTO.class));
     }
 
-    public TrainDTO get(String id) {
+    public TrainDTO get(Long id) {
 
         Train train =
                 trainRepository.findById(id)
@@ -42,7 +55,7 @@ public class TrainService {
         return modelMapper.map(train, TrainDTO.class);
     }
 
-    public void delete(String id) {
+    public void delete(Long id) {
 
         trainRepository.deleteById(id);
     }
