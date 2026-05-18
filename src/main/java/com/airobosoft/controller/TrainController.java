@@ -1,19 +1,26 @@
 package com.airobosoft.controller;
 
+import com.airobosoft.dto.ErrorResponse;
 import com.airobosoft.dto.TrainDTO;
+import com.airobosoft.dto.TrainImageDataWithResource;
+import com.airobosoft.service.TrainImageService;
 import com.airobosoft.service.TrainService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.time.LocalDateTime;
 
 
 @RestController
@@ -22,6 +29,8 @@ public class TrainController {
 
     @Autowired
     private TrainService service;
+
+    private TrainImageService imageService;
 
     @Operation(
             summary = "Get All Trains",
@@ -110,4 +119,58 @@ public class TrainController {
                 "Excel report sent successfully"
         );
     }
+
+    @PostMapping("/{id}/upload-image")
+    public ResponseEntity<?> uploadTrainImage(
+
+            @PathVariable Long id,
+
+            @RequestParam("image")
+            MultipartFile image
+
+    ) throws IOException {
+
+        String contentType = image.getContentType();
+
+        if (contentType != null &&
+                contentType.toLowerCase().startsWith("image")) {
+
+            return new ResponseEntity<>(
+                    imageService.upload(image, id),
+                    HttpStatus.OK
+            );
+        }
+
+        return new ResponseEntity<>(
+
+                new ErrorResponse(
+                        "Image not uploaded",
+                        "INVALID_FILE",
+                        false,
+                        LocalDateTime.now()
+                ),
+
+                HttpStatus.BAD_REQUEST
+        );
+    }
+
+
+    @GetMapping("/images/{id}")
+    public ResponseEntity<Resource> getImage(
+            @PathVariable Long id
+    ) throws Exception {
+
+        TrainImageDataWithResource trainImage =
+                imageService.getImage(id);
+
+        return ResponseEntity.ok()
+                  .contentType(
+                        MediaType.parseMediaType(
+                                trainImage.fileType()))
+                .body(
+                        trainImage.resource()
+                );
+    }
+
+
 }

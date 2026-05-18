@@ -16,6 +16,9 @@ public class Train {
 
     private Integer coaches;
 
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    private TrainImage trainImage;
+
     public Train() {
     }
 
@@ -59,5 +62,13 @@ public class Train {
 
     public void setCoaches(Integer coaches) {
         this.coaches = coaches;
+    }
+
+    public TrainImage getTrainImage() {
+        return trainImage;
+    }
+
+    public void setTrainImage(TrainImage trainImage) {
+        this.trainImage = trainImage;
     }
 }

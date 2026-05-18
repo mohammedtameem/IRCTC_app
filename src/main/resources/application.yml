@@ -44,3 +44,8 @@ management:
   endpoint:
     health:
       show-details: always
+
+train:
+  image:
+    folder:
+      path: uploads/
