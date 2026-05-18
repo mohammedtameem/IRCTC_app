@@ -5,11 +5,15 @@ import com.airobosoft.service.TrainService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.ByteArrayInputStream;
 
 
 @RestController
@@ -73,5 +77,37 @@ public class TrainController {
         service.delete(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+
+    @GetMapping("/export")
+    public ResponseEntity<InputStreamResource> exportExcel() {
+
+        ByteArrayInputStream excelFile =
+                service.exportTrainsToExcel();
+
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.add(
+                "Content-Disposition",
+                "attachment; filename=trains.xlsx"
+        );
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(new InputStreamResource(excelFile));
+    }
+
+    @PostMapping("/send-report")
+    public ResponseEntity<String> sendReport(
+
+            @RequestParam String email
+    ) {
+
+        service.sendTrainReport(email);
+
+        return ResponseEntity.ok(
+                "Excel report sent successfully"
+        );
     }
 }

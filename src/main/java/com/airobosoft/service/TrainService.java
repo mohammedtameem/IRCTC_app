@@ -3,6 +3,8 @@ package com.airobosoft.service;
 import com.airobosoft.dto.TrainDTO;
 import com.airobosoft.entity.Train;
 import com.airobosoft.repo.TrainRepository;
+import com.airobosoft.reports.ExcelGenerator;
+import com.airobosoft.service.email.EmailService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -11,6 +13,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
+import java.util.List;
+
 
 @Service
 @AllArgsConstructor
@@ -18,6 +23,7 @@ public class TrainService {
 
     private final TrainRepository trainRepository;
     private final ModelMapper modelMapper;
+    private final EmailService emailService;
 
     public TrainDTO add(TrainDTO train) {
 
@@ -58,5 +64,43 @@ public class TrainService {
     public void delete(Long id) {
 
         trainRepository.deleteById(id);
+    }
+
+    public ByteArrayInputStream exportTrainsToExcel() {
+
+        List<TrainDTO> trains =
+                trainRepository.findAll()
+                        .stream()
+                        .map(train ->
+                                modelMapper.map(
+                                        train,
+                                        TrainDTO.class
+                                ))
+                        .toList();
+
+        return ExcelGenerator.generateExcel(trains);
+    }
+
+    public void sendTrainReport(String email) {
+
+        List<TrainDTO> trains =
+                trainRepository.findAll()
+                        .stream()
+                        .map(train ->
+                                modelMapper.map(
+                                        train,
+                                        TrainDTO.class
+                                ))
+                        .toList();
+
+        System.out.println(trains.size());
+
+        ByteArrayInputStream excelFile =
+                ExcelGenerator.generateExcel(trains);
+
+        emailService.sendExcelReport(
+                email,
+                excelFile
+        );
     }
 }
