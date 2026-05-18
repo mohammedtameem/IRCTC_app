@@ -1,6 +1,6 @@
 package com.airobosoft.config;
 
-import com.airobosoft.interceptorts.LoggingInterceptor;
+import com.airobosoft.interceptors.LoggingInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;

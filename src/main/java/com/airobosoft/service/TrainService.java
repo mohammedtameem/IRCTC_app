@@ -1,45 +1,49 @@
 package com.airobosoft.service;
 
+import com.airobosoft.dto.TrainDTO;
 import com.airobosoft.entity.Train;
+import com.airobosoft.repo.TrainRepository;
+import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class TrainService {
 
-    List<Train> trainList = new ArrayList<>();
+    private final TrainRepository trainRepository;
+    private final ModelMapper modelMapper;
 
-    public TrainService() {
+    public TrainDTO add(TrainDTO train) {
 
-        trainList.add(new Train("1234","Bangalore - chennai superfast",20));
-        trainList.add(new Train("1235","Chennai - Bangalore shatabdi",10));
-
+        Train trainEntity = modelMapper.map(train,Train.class);
+        return modelMapper.map(trainRepository.save(trainEntity),TrainDTO.class);
     }
 
-    public Train add(Train train) {
-        trainList.add(train);
-        return train;
-    }
+    // SELECT *
+    public List<TrainDTO> all() {
 
-    public List<Train> all() {
-        return this.trainList;
-    }
-
-    public Train get(String trainNo) {
-       return trainList.stream().filter(train -> train.trainNo().equals(trainNo))
-                .findFirst().get();
-    }
-
-    public void delete(String trainNo) {
-        List<Train> list = this.trainList.stream().filter(train -> !train.trainNo().equals(trainNo))
+        return trainRepository.findAll()
+                .stream()
+                .map(train ->
+                        modelMapper.map(train, TrainDTO.class))
                 .toList();
-
-        this.trainList = list;
     }
 
+    public TrainDTO get(String id) {
 
+        Train train =
+                trainRepository.findById(id)
+                        .orElseThrow(() ->
+                                new RuntimeException("Train Not Found"));
 
+        return modelMapper.map(train, TrainDTO.class);
+    }
 
+    public void delete(String id) {
+
+        trainRepository.deleteById(id);
+    }
 }

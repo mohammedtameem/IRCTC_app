@@ -1,6 +1,6 @@
 package com.airobosoft.controller;
 
-import com.airobosoft.entity.Train;
+import com.airobosoft.dto.TrainDTO;
 import com.airobosoft.service.TrainService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,16 +19,16 @@ public class TrainController {
     private TrainService service;
 
     @GetMapping(path="/list",produces = MediaType.APPLICATION_XML_VALUE)
-    public ResponseEntity<List<Train>> listTrain() {
+    public ResponseEntity<List<TrainDTO>> listTrain() {
 
         return ResponseEntity.ok(service.all());
     }
 
     @PostMapping
-    public ResponseEntity<Train> addTrain(
-            @Valid  @RequestBody Train train) {
+    public ResponseEntity<TrainDTO> addTrain(
+            @Valid @RequestBody TrainDTO train) {
 
-        Train savedTrain = service.add(train);
+        TrainDTO savedTrain = service.add(train);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -36,10 +36,10 @@ public class TrainController {
     }
 
     @GetMapping("/{trainNo}")
-    public ResponseEntity<Train> getTrainByNo(
+    public ResponseEntity<TrainDTO> getTrainByNo(
             @PathVariable String trainNo) {
 
-        Train train = service.get(trainNo);
+        TrainDTO train = service.get(trainNo);
 
         return ResponseEntity.ok(train);
     }

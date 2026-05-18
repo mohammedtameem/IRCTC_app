@@ -1,27 +1,63 @@
 package com.airobosoft.entity;
 
-import com.airobosoft.annotation.ValidCoach;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.persistence.*;
 
-public record Train(
+@Entity
+@Table(name = "trains")
+public class Train {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-        @NotBlank(message = "Train no cannot be blank must have 5 values")
-        @Pattern(
-                regexp = "^[0-9]{5}$",
-                message = "Train number must contain exactly 5 digits")
-        String trainNo,
+    private String trainNo;
 
-        @NotBlank(message = "Train name cannot be empty")
-        @Size(
-                min = 3,
-                max = 50,
-                message = "Train name must be between 3 and 50 characters")
-        String name,
+    private String name;
 
-        @ValidCoach
-        int coaches
-) {
+    private Integer coaches;
+
+    public Train() {
+    }
+
+    public Train(Long id,
+                       String trainNo,
+                       String name,
+                       Integer coaches) {
+        this.id = id;
+        this.trainNo = trainNo;
+        this.name = name;
+        this.coaches = coaches;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTrainNo() {
+        return trainNo;
+    }
+
+    public void setTrainNo(String trainNo) {
+        this.trainNo = trainNo;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getCoaches() {
+        return coaches;
+    }
+
+    public void setCoaches(Integer coaches) {
+        this.coaches = coaches;
+    }
 }
