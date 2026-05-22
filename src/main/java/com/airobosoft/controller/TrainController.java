@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.time.LocalDateTime;
 
 
@@ -30,6 +29,7 @@ public class TrainController {
     @Autowired
     private TrainService service;
 
+    @Autowired
     private TrainImageService imageService;
 
     @Operation(

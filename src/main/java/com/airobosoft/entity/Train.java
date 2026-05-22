@@ -1,9 +1,19 @@
 package com.airobosoft.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Table(name = "trains")
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Train {
 
     @Id
@@ -14,61 +24,24 @@ public class Train {
 
     private String name;
 
-    private Integer coaches;
+    private Integer totalDistance;
+
+    @ManyToOne
+    @JoinColumn(name="source_station_id")
+    private Station sourceStation;
+
+    @ManyToOne
+    @JoinColumn(name="destination_station_id")
+    private Station destinationStation;
+
+    @OneToMany(mappedBy = "train")
+    private List<TrainRoute> routes;
+
+    @OneToMany(mappedBy = "train")
+    private List<TrainSchedule> schedules;
+
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private TrainImage trainImage;
 
-    public Train() {
-    }
-
-    public Train(Long id,
-                       String trainNo,
-                       String name,
-                       Integer coaches) {
-        this.id = id;
-        this.trainNo = trainNo;
-        this.name = name;
-        this.coaches = coaches;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTrainNo() {
-        return trainNo;
-    }
-
-    public void setTrainNo(String trainNo) {
-        this.trainNo = trainNo;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getCoaches() {
-        return coaches;
-    }
-
-    public void setCoaches(Integer coaches) {
-        this.coaches = coaches;
-    }
-
-    public TrainImage getTrainImage() {
-        return trainImage;
-    }
-
-    public void setTrainImage(TrainImage trainImage) {
-        this.trainImage = trainImage;
-    }
 }

@@ -66,4 +66,12 @@ public class TrainImage {
     public void setTrain(Train train) {
         this.train = train;
     }
+
+    public String getObjectName() {
+        return objectName;
+    }
+
+    public void setObjectName(String objectName) {
+        this.objectName = objectName;
+    }
 }
