@@ -1,11 +1,19 @@
 package com.airobosoft.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalTime;
 
 @Entity
 @Table(name="train_routes")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class TrainRoute {
 
     @Id

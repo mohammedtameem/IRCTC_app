@@ -2,6 +2,10 @@ package com.airobosoft.entity;
 
 import com.airobosoft.enums.BookingStatus;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -10,18 +14,30 @@ import java.util.List;
 
 @Entity
 @Table(name="bookings")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Booking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name="user_id")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name="train_schedule_id")
     private TrainSchedule trainSchedule;
 
+    @ManyToOne
+    @JoinColumn(name="source_station_id")
     private Station sourceStation;
 
+    @ManyToOne
+    @JoinColumn(name="destination_station_id")
     private Station destinationStation;
 
     private LocalDate journeyDate;
@@ -36,6 +52,7 @@ public class Booking {
     @OneToMany(mappedBy = "booking")
     private List<BookingPassenger> passenger;
 
+    @OneToOne(mappedBy = "booking", cascade = CascadeType.ALL)
     private Payment payment;
 
 }

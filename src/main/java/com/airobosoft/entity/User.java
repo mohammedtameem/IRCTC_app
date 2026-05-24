@@ -1,12 +1,20 @@
 package com.airobosoft.entity;
 
-import com.airobosoft.enums.UserRole;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
-@Table(name="users")
+@Table(name="user")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class User {
 
     @Id
@@ -15,6 +23,7 @@ public class User {
 
     private String name;
 
+    @Column(unique = true)
     private String email;
 
     private String password;
@@ -23,5 +32,6 @@ public class User {
 
     private LocalDateTime createdAt;
 
-    private UserRole userRole = UserRole.ROLE_NORMAL;
+    @OneToMany(mappedBy = "user")
+    private List<Booking> bookings;
 }

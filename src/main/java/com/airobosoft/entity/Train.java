@@ -1,17 +1,14 @@
 package com.airobosoft.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
 @Table(name = "trains")
-@Setter
-@Getter
+@Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Train {
@@ -40,8 +37,9 @@ public class Train {
     @OneToMany(mappedBy = "train")
     private List<TrainSchedule> schedules;
 
-
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name="train_image_id" +
+            "")
     private TrainImage trainImage;
 
 }
