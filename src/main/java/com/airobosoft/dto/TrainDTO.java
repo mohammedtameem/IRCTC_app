@@ -27,6 +27,16 @@ public class TrainDTO {
     )
     private String name;
 
+    private Integer totalDistance;
+
+    private StationDTO sourceStation;
+
+    private Long sourceStationId;
+
+    private StationDTO destinationStation;
+
+    private Long destinationStationId;
+
     @ValidCoach
     private Integer coaches;
 }
