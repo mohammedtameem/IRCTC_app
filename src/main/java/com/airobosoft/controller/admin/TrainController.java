@@ -41,17 +41,12 @@ public class TrainController {
             @RequestParam(defaultValue = "asc")
             String direction
     ){
-//        Sort sort = direction.equalsIgnoreCase("desc")
-//                ? Sort.by(sortBy).descending()
-//                : Sort.by(sortBy).ascending();
-
-        //Pageable pageable = PageRequest.of(page, size, sort);
         return ResponseEntity.ok(trainService.all(page, size, sortBy, direction));
     }
 
     @PostMapping("/bulk")
     @Operation(summary = "Add more than one train record at a time")
-    public ResponseEntity<List<TrainDTO>> addTrainBulk(@RequestBody List<@Valid TrainDTO> train){
+    public ResponseEntity<List<TrainDTO>> addMultipleTrains(@RequestBody List<@Valid TrainDTO> train){
         return new ResponseEntity<>(trainService.addTrainBulk(train), HttpStatus.CREATED);
     }
 
