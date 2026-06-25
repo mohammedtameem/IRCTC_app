@@ -55,6 +55,27 @@ public class StationServiceImpl implements StationService {
         return stations.map(this::convertToDTO);
     }
 
+    @Override
+    public void updateStation(StationDTO stationDTO) {
+        Station station = stationRepository.findById(stationDTO.getId())
+                .orElseThrow(() -> new RuntimeException("Station not found with id: " + stationDTO.getId()));
+
+        station.setCode(stationDTO.getCode());
+        station.setName(stationDTO.getName());
+        station.setCity(stationDTO.getCity());
+        station.setState(stationDTO.getState());
+
+        stationRepository.save(station);
+    }
+
+    @Override
+    public void deleteStation(Long id) {
+        Station station = stationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Station not found with id: " + id));
+
+        stationRepository.delete(station);
+    }
+
     private StationDTO convertToDTO(Station station) {
         return StationDTO.builder()
                 .id(station.getId())
