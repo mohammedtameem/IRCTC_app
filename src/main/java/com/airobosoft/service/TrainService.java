@@ -27,10 +27,31 @@ public class TrainService {
 
     public TrainDTO add(TrainDTO train) {
 
-        Train trainEntity = modelMapper.map(train,Train.class);
-        return modelMapper.map(trainRepository.save(trainEntity),TrainDTO.class);
+        Train trainEntity = modelMapper.map(train, Train.class);
+        return modelMapper.map(trainRepository.save(trainEntity), TrainDTO.class);
     }
 
+    public List<TrainDTO> addTrainBulk(List<TrainDTO> trainDtos){
+
+        List<Train> trains = trainDtos.stream()
+                .map(dto ->
+                        modelMapper.map(
+                                dto,
+                                Train.class
+                        ))
+                .toList();
+
+        List<Train> savedTrains =
+                trainRepository.saveAll(trains);
+
+        return savedTrains.stream()
+                .map(train ->
+                        modelMapper.map(
+                                train,
+                                TrainDTO.class
+                        ))
+                .toList();
+    }
     // SELECT *
     public Page<TrainDTO> all(int page,
                               int size,
@@ -65,6 +86,7 @@ public class TrainService {
 
         trainRepository.deleteById(id);
     }
+
 
     public ByteArrayInputStream exportTrainsToExcel() {
 
