@@ -31,6 +31,11 @@
         hibernate:
           dialect: org.hibernate.dialect.MySQL8Dialect
 
+    sql:
+      init:
+        mode: always
+        data-locations: classpath:data.sql
+
   server:
     port: 8085
 
