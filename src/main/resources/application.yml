@@ -1,58 +1,58 @@
-spring:
-  application:
-    name: IRCTC-backend
+  spring:
+    application:
+      name: IRCTC-backend
 
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: mdtameem555@gmail.com
-    password: kedp rett rotx fzqo
+    mail:
+      host: smtp.gmail.com
+      port: 587
+      username: mdtameem555@gmail.com
+      password: kedp rett rotx fzqo
 
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
+      properties:
+        mail:
+          smtp:
+            auth: true
+            starttls:
+              enable: true
 
-  datasource:
-    url: jdbc:mysql://localhost:3306/backendx
-    username: root
-    password: login123$
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    datasource:
+      url: jdbc:mysql://localhost:3306/irctcdb
+      username: root
+      password: Afnan786.
+      driver-class-name: com.mysql.cj.jdbc.Driver
 
-  jpa:
-    hibernate:
-      ddl-auto: update
-
-    show-sql: true
-
-    properties:
+    jpa:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
+        ddl-auto: update
 
-server:
-  port: 8085
+      show-sql: true
 
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.MySQL8Dialect
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-
-  endpoint:
-    health:
-      show-details: always
-
-train:
-  image:
-    folder:
-      path: uploads/
+  server:
+    port: 8085
 
 
-minio:
-  url: http://localhost:9100
-  access-key: admin
-  secret-key: password123
-  bucket-name: train-images
+  management:
+    endpoints:
+      web:
+        exposure:
+          include: "*"
+
+    endpoint:
+      health:
+        show-details: always
+
+  train:
+    image:
+      folder:
+        path: uploads/
+
+
+  minio:
+    url: http://localhost:9100
+    access-key: admin
+    secret-key: password123
+    bucket-name: train-images
