@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 
 @Service
@@ -72,20 +73,12 @@ public class TrainService {
                 modelMapper.map(train, TrainDTO.class));
     }
 
-    public TrainDTO get(Long id) {
-
-        Train train =
-                trainRepository.findById(id)
-                        .orElseThrow(() ->
-                                new RuntimeException("Train Not Found"));
-
+    public TrainDTO getTrain(Long id){
+        Train train = trainRepository.findById(id).orElseThrow(() -> new NoSuchElementException("with train id : " + id));
         return modelMapper.map(train, TrainDTO.class);
     }
 
-    public void delete(Long id) {
 
-        trainRepository.deleteById(id);
-    }
 
 
     public ByteArrayInputStream exportTrainsToExcel() {
