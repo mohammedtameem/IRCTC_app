@@ -1,11 +1,22 @@
-INSERT INTO trains (train_no, name, coaches)
-VALUES ('12345', 'Bangalore-Shimoga JanShatabdi', 20);
-
-INSERT INTO trains (train_no, name, coaches)
-VALUES ('12355', 'Shimoga-Bangalore JanShatabdi', 25);
-
-INSERT INTO trains (train_no, name, coaches)
-VALUES ('12627', 'Karnataka Express', 22);
-
-INSERT INTO trains (train_no, name, coaches)
-VALUES ('12028', 'Shatabdi Express', 18);
+INSERT INTO trains (train_no, name, total_distance, source_station_id, destination_station_id)
+VALUES
+    ('12627', 'Karnataka Express', 850, 1, 15),
+    ('16515', 'Karwar Express', 520,1, 11),
+    ('17392', 'Hubballi Express', 410, 1, 9),
+    ('11014', 'Lokmanya Express', 980, 15, 13),
+    ('12786', 'Mysuru Superfast Express', 780, 13, 1),
+    ('16591', 'Hampi Express', 410, 1, 9),
+    ('12649', 'Sampark Kranti Express', 980, 1, 13),
+    ('12725', 'Siddhaganga Express', 700, 1, 15),
+    ('17325', 'Vishwamanava Express', 520, 1, 11),
+    ('16535', 'Gol Gumbaz Express', 850, 1, 14),
+    ('11036', 'Sharavati Express', 760, 1, 13),
+    ('16545', 'Chamundi Express', 430, 1, 9),
+    ('12630', 'Udayan Express', 1180, 1, 13),
+    ('12789', 'Kacheguda Express', 860, 1, 15),
+    ('16589', 'Rani Chennamma Express', 610, 1, 11),
+    ('12629', 'West Coast Express', 920, 1, 11),
+    ('16210', 'Ajmer Express', 2100, 1, 13),
+    ('12610', 'Chennai Express', 360, 1, 15),
+    ('16533', 'Jodhpur Express', 2250, 1, 13),
+    ('22692', 'Rajdhani Express', 2150, 15, 13);
