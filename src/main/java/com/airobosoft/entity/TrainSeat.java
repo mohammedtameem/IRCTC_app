@@ -2,17 +2,13 @@ package com.airobosoft.entity;
 
 import com.airobosoft.enums.CoachType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.math.BigDecimal;
+import lombok.*;
 
 @Entity
 @Table(name="train_seats")
-@Data
 @Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class TrainSeat {
@@ -34,7 +30,20 @@ public class TrainSeat {
 
     private Integer nextToAssign=10;
 
-    private BigDecimal price;
+    private Double price;
+
+    private Integer seatNumberToAssign;
+
+    private Integer seatOrder;
+
+    public boolean isCoachfull(){
+        return availableSeats<=0;
+    }
+
+    public boolean isSeatAvailable(int seatToBook){
+        return seatToBook <= availableSeats;
+    }
+
 
 
 }
