@@ -7,7 +7,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "trains")
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -38,8 +39,7 @@ public class Train {
     private List<TrainSchedule> schedules;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name="train_image_id" +
-            "")
+    @JoinColumn(name="train_image_id")
     private TrainImage trainImage;
 
 }

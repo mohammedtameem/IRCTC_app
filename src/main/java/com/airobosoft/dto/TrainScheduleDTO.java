@@ -2,7 +2,7 @@ package com.airobosoft.dto;
 
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class TrainScheduleDTO {
     private Long id;
     private Long trainId;
-    private LocalDateTime runningDate;
+    private LocalDate runningDate;
     private Integer availableSeats;
 
 }
