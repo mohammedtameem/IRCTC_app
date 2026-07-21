@@ -73,6 +73,14 @@ public class TrainController {
         return ResponseEntity.ok(trainService.getTrain(id));
     }
 
+    @GetMapping("/name/{name}")
+    public ResponseEntity<TrainDTO> getTrainByName(
+            @Parameter(description = "Train Name", example = "Rajdhani Express")
+            @PathVariable String name) {
+
+        return ResponseEntity.ok(trainService.getTrainByName(name));
+    }
+
     @DeleteMapping
     public void deleteTrain(Long id){
         Train train = trainRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Train not found with train id : "+ id));
