@@ -143,6 +143,19 @@ public class TrainController {
     }
 
 
+
+    @GetMapping("/{trainNo}")
+    @Operation(
+            summary = "Get Train By Number",
+            description = "Returns train details using train number"
+    )
+    public ResponseEntity<TrainDTO> getTrainByTrainNo(
+            @PathVariable String trainNo) {
+
+        return ResponseEntity.ok(trainService.getTrainByTrainNo(trainNo));
+    }
+
+
     @GetMapping("/images/{id}")
     public ResponseEntity<Resource> getImage(
             @PathVariable Long id
