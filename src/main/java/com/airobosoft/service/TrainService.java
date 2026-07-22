@@ -73,6 +73,20 @@ public class TrainService {
                 modelMapper.map(train, TrainDTO.class));
     }
 
+
+
+
+    public TrainDTO getTrainByTrainNo(String trainNo) {
+
+        Train train = trainRepository.findByTrainNo(trainNo)
+                .orElseThrow(() -> new RuntimeException("Train not found with number: " + trainNo));
+
+        return modelMapper.map(train, TrainDTO.class);
+    }
+
+
+
+
     public TrainDTO getTrain(Long id){
         Train train = trainRepository.findById(id).orElseThrow(() -> new NoSuchElementException("with train id : " + id));
         return modelMapper.map(train, TrainDTO.class);
