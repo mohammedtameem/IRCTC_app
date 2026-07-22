@@ -2,6 +2,7 @@ package com.airobosoft.service;
 
 import com.airobosoft.dto.TrainDTO;
 import com.airobosoft.entity.Train;
+import com.airobosoft.exception.ResourceNotFoundException;
 import com.airobosoft.repo.TrainRepository;
 import com.airobosoft.reports.ExcelGenerator;
 import com.airobosoft.service.email.EmailService;
@@ -132,4 +133,12 @@ public class TrainService {
                 excelFile
         );
     }
+
+    public TrainDTO getTrainByName(String name) {
+
+        Train train = trainRepository.findByName(name).orElseThrow(() -> new ResourceNotFoundException("Train not found with name: " + name));
+
+        return modelMapper.map(train, TrainDTO.class);
+    }
+
 }
