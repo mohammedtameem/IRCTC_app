@@ -8,10 +8,12 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
 public interface TrainRepository extends JpaRepository<Train, Long> {
+    Optional<Train> findByTrainNo(String trainNo);
 
 
 @Query("""
@@ -26,4 +28,5 @@ public interface TrainRepository extends JpaRepository<Train, Long> {
 
     @Query("SELECT tr.train FROM TrainRoute tr WHERE tr.station.id = :sourceStationId OR tr.station.id = :destinationStationId")
     List<Train> findTrainBySourceAndDestination(@Param("sourceStationId") Long sourceStationId, @Param("destinationStationId") Long destinationStationId);
+    Optional<Train> findByName(String name);
 }
