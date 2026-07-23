@@ -1,6 +1,8 @@
 package com.airobosoft.service;
 
+import com.airobosoft.dto.AvailableTrainResponse;
 import com.airobosoft.dto.TrainDTO;
+import com.airobosoft.dto.UserTrainSearchRequest;
 import com.airobosoft.entity.Train;
 import com.airobosoft.exception.ResourceNotFoundException;
 import com.airobosoft.repo.TrainRepository;
@@ -9,23 +11,22 @@ import com.airobosoft.service.email.EmailService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 
 @Service
-@AllArgsConstructor
-public class TrainService {
+public interface TrainService {
 
-    private final TrainRepository trainRepository;
-    private final ModelMapper modelMapper;
-    private final EmailService emailService;
+    TrainDTO add(TrainDTO train);
+    List<TrainDTO> addTrainBulk(List<TrainDTO> trainDtos);
+    Page<TrainDTO> all(int page, int size, String sortBy, String direction);
+    TrainDTO getTrain(Long id);
+    ByteArrayInputStream exportTrainsToExcel();
+    void sendTrainReport(String email);
+    List<AvailableTrainResponse> userSearchTrains(UserTrainSearchRequest searchRequest);
 
     public TrainDTO add(TrainDTO train) {
 

@@ -5,7 +5,8 @@ import lombok.*;
 
 @Entity
 @Table(name="stations")
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,7 +14,7 @@ public class Station {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String code;
     private String name;
